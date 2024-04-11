@@ -46,7 +46,7 @@ public class FenetreLogiciel extends Application {
         center.setAlignment(Pos.CENTER);
         grid.setHgap(10);
         grid.setVgap(10);
-        grid.setPadding(new Insets(25, 25, 25, 25));
+        grid.setPadding(new Insets(10, 10, 10, 10));
         Label userName = new Label("Name:");
         grid.add(userName, 0, 1);
         TextField userTextField = new TextField();
@@ -61,6 +61,7 @@ public class FenetreLogiciel extends Application {
         grid.add(pwBox, 1, 3);
         HBox boutonsCenter = new HBox();
         Button submit = new Button("Submit");
+//        HBox.setMargin( submit, new Insets(0.0d, 10.0d, 0.0d, 0.0d) );
         Button cancel = new Button("Cancel");
         boutonsCenter.setAlignment(Pos.CENTER);
         boutonsCenter.getChildren().addAll(submit,cancel);
