@@ -1,11 +1,13 @@
-package fr.amu.iut.exercice1;
+package fr.amu.iut.exercice11;
 
 import javafx.application.Application;
+import javafx.beans.property.StringProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -37,7 +39,6 @@ public class Palette extends Application {
     @Override
     public void start(Stage primaryStage) {
         root = new BorderPane();
-
         texteDuHaut = new Label();
         texteDuHaut.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         BorderPane.setAlignment(texteDuHaut, Pos.CENTER);
@@ -52,12 +53,33 @@ public class Palette extends Application {
         texteDuBas = new Label();
         bas.setAlignment(Pos.CENTER_RIGHT);
         bas.getChildren().addAll(boutons, texteDuBas);
-
         vert = new Button("Vert");
         rouge = new Button("Rouge");
         bleu = new Button("Bleu");
 
         /* VOTRE CODE ICI */
+        vert.addEventHandler(MouseEvent.MOUSE_CLICKED, actionEvent -> {
+            nbVert++;
+            texteDuHaut.setText(vert.getText()+" choisi "+nbVert+" fois");
+            panneau.setStyle("-fx-background-color: green");
+            texteDuBas.setText("le bleu est une jolie couleur !");
+            texteDuBas.setStyle("-fx-text-fill: blue");
+        });
+        rouge.addEventHandler(MouseEvent.MOUSE_CLICKED, actionEvent -> {
+            nbRouge++;
+            texteDuHaut.setText(rouge.getText()+" choisi "+nbRouge+" fois");
+            panneau.setStyle("-fx-background-color: red");
+            texteDuBas.setText("le bleu est une jolie couleur !");
+            texteDuBas.setStyle("-fx-text-fill: blue");
+        });
+        bleu.addEventHandler(MouseEvent.MOUSE_CLICKED, actionEvent -> {
+            nbBleu++;
+            texteDuHaut.setText(bleu.getText()+" choisi "+nbBleu+" fois");
+            panneau.setStyle("-fx-background-color: blue");
+            texteDuBas.setText("le bleu est une jolie couleur !");
+            texteDuBas.setStyle("-fx-text-fill: blue");
+        });
+
 
         boutons.getChildren().addAll(vert, rouge, bleu);
 
