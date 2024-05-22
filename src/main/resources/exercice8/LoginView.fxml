@@ -12,14 +12,20 @@
     <Label text="User Id:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
 
 <!--   à compléter par un TextField et un Label -->
+    <Label text="Password:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+
     <TextField fx:id="userid" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 
     <PasswordField fx:id="pwd" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
 <!--  à compléter pour les boutons -->
-    <Button fx:id="ok" text="ok" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+    <HBox fx:id="hbox" GridPane.columnIndex="0" GridPane.rowIndex="3" GridPane.columnSpan="2" alignment="CENTER" spacing="20">
 
-   <Button fx:id="cancel" text="cancel" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+        <Button fx:id="ok" text="ok" />
+
+        <Button fx:id="cancel" text="cancel" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+    </HBox>
 
    <columnConstraints>
       <ColumnConstraints maxWidth="103.0" minWidth="63.0" prefWidth="83.0" />
