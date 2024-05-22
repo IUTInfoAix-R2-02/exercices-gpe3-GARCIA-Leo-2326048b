@@ -21,9 +21,9 @@
 <!--  à compléter pour les boutons -->
     <HBox fx:id="hbox" GridPane.columnIndex="0" GridPane.rowIndex="3" GridPane.columnSpan="2" alignment="CENTER" spacing="20">
 
-        <Button fx:id="ok" text="ok" />
+        <Button fx:id="ok" text="ok" onAction="#okClicked" />
 
-        <Button fx:id="cancel" text="cancel" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+        <Button fx:id="cancel" text="cancel" onAction="#cancelClicked" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
 
     </HBox>
 
