@@ -1,5 +1,6 @@
-package fr.amu.iut.exercice3;
+package fr.amu.iut.exercice13;
 
+import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -13,11 +14,28 @@ public class MainPersonnes  {
 
     public static void main(String[] args) {
 
-        lesPersonnes = FXCollections.observableArrayList();
+        lesPersonnes = FXCollections.observableArrayList(personne -> new Observable[] {personne.ageProperty()});
 
 //        unChangementListener = à completer
-
+        unChangementListener = change -> {
+            while (change.next()) {
+                if (change.wasAdded()) {
+                    for (Personne p : change.getAddedSubList()) {
+                        System.out.println("Ajouté: " + p.getNom());
+                    }
+                } else if (change.wasRemoved()) {
+                    for (Personne p : change.getRemoved()) {
+                        System.out.println("Supprimé: " + p.getNom());
+                    }
+                } else if (change.wasUpdated()) {
+//                    Personne p = change
+//                    System.out.println(p.getNom() + " a maintenant " + p.getAge());
+                }
+            }
+        };
         lesPersonnes.addListener(unChangementListener);
+
+        question3();
     }
 
     public static void question1() {
@@ -58,5 +76,6 @@ public class MainPersonnes  {
             p.setAge(p.getAge()+10);
         lesPersonnes.removeAll(paul, pierre);
     }
-}
 
+
+}
