@@ -56,9 +56,9 @@ public class Palette extends Application {
         bas.getChildren().addAll(boutons, texteDuBas);
         bas.setAlignment(Pos.CENTER_RIGHT);
 
-        vert = new CustomButton("Vert", "#31BCA4");
-        rouge = new CustomButton("Rouge", "#F21411");
-        bleu = new CustomButton("Bleu", "#3273A4");
+        vert = new CustomButton("Vert", "GREEN");
+        rouge = new CustomButton("Rouge", "RED");
+        bleu = new CustomButton("Bleu", "BLUE");
 
         gestionnaireEvenement = (event) -> {
             sourceOfEvent = (CustomButton) event.getSource();
