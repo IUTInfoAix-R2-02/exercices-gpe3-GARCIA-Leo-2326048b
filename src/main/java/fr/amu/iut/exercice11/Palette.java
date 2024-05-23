@@ -1,7 +1,9 @@
 package fr.amu.iut.exercice11;
 
 import javafx.application.Application;
-import javafx.beans.property.StringProperty;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
+import javafx.beans.property.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -12,6 +14,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
@@ -36,9 +39,20 @@ public class Palette extends Application {
     private Label texteDuBas;
 
 
+    private IntegerProperty nbFois;
+    private StringProperty message;
+    private StringProperty couleurPanneau;
+
+    public Palette() {
+        nbFois = new SimpleIntegerProperty(0);
+        message = new SimpleStringProperty ("");
+        couleurPanneau = new SimpleStringProperty("#FFFFFF");
+    }
+
     @Override
     public void start(Stage primaryStage) {
         root = new BorderPane();
+
         texteDuHaut = new Label();
         texteDuHaut.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         BorderPane.setAlignment(texteDuHaut, Pos.CENTER);
@@ -53,32 +67,35 @@ public class Palette extends Application {
         texteDuBas = new Label();
         bas.setAlignment(Pos.CENTER_RIGHT);
         bas.getChildren().addAll(boutons, texteDuBas);
+
         vert = new Button("Vert");
         rouge = new Button("Rouge");
         bleu = new Button("Bleu");
 
-        /* VOTRE CODE ICI */
-        vert.addEventHandler(MouseEvent.MOUSE_CLICKED, actionEvent -> {
-            nbVert++;
-            texteDuHaut.setText(vert.getText()+" choisi "+nbVert+" fois");
-            panneau.setStyle("-fx-background-color: green");
-            texteDuBas.setText("le bleu est une jolie couleur !");
-            texteDuBas.setStyle("-fx-text-fill: blue");
+
+
+
+        vert.setOnAction(actionEvent -> {
+            nbVert ++;
+            nbFois.setValue(nbVert);
+            message.setValue("Vert");
+            couleurPanneau.setValue("GREEN");
         });
-        rouge.addEventHandler(MouseEvent.MOUSE_CLICKED, actionEvent -> {
-            nbRouge++;
-            texteDuHaut.setText(rouge.getText()+" choisi "+nbRouge+" fois");
-            panneau.setStyle("-fx-background-color: red");
-            texteDuBas.setText("le bleu est une jolie couleur !");
-            texteDuBas.setStyle("-fx-text-fill: blue");
+
+        rouge.setOnAction(actionEvent -> {
+            nbRouge ++;
+            nbFois.setValue(nbRouge);
+            message.setValue("Rouge");
+            couleurPanneau.setValue("RED");
         });
-        bleu.addEventHandler(MouseEvent.MOUSE_CLICKED, actionEvent -> {
-            nbBleu++;
-            texteDuHaut.setText(bleu.getText()+" choisi "+nbBleu+" fois");
-            panneau.setStyle("-fx-background-color: blue");
-            texteDuBas.setText("le bleu est une jolie couleur !");
-            texteDuBas.setStyle("-fx-text-fill: blue");
+
+        bleu.setOnAction(event -> {
+            nbBleu ++;
+            nbFois.setValue(nbBleu);
+            message.setValue("Bleu");
+            couleurPanneau.setValue("BLUE");
         });
+
 
 
         boutons.getChildren().addAll(vert, rouge, bleu);
@@ -87,10 +104,24 @@ public class Palette extends Application {
         root.setTop(texteDuHaut);
         root.setBottom(bas);
 
+        createBindings();
+
         Scene scene = new Scene(root);
 
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-}
 
+
+    private void createBindings() {
+        BooleanProperty pasEncoreDeClic = new SimpleBooleanProperty();
+        pasEncoreDeClic.bind(nbFois.isEqualTo(0));
+
+        texteDuHaut.textProperty().bind(Bindings.when(pasEncoreDeClic).then("Cliquez sur un bouton").otherwise(Bindings.concat(message, " choisi ", nbFois, " fois")));
+        panneau.styleProperty().bind(Bindings.concat("-fx-background-color: ", couleurPanneau));
+        texteDuBas.textProperty().bind(Bindings.when(pasEncoreDeClic).then("").otherwise(Bindings.concat("Le ", message, " est vraiment une jolie couleur !")));
+        texteDuBas.styleProperty().bind(Bindings.when(pasEncoreDeClic).then("-fx-text-fill:white").otherwise(Bindings.concat("-fx-text-fill:",couleurPanneau)));
+
+    }
+
+}
