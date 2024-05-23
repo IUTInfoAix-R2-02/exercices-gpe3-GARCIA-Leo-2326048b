@@ -1,6 +1,8 @@
-package fr.amu.iut.exercice2;
+package fr.amu.iut.exercice12;
 
 import javafx.application.Application;
+import javafx.beans.binding.Bindings;
+import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -60,17 +62,30 @@ public class Palette extends Application {
 
         gestionnaireEvenement = (event) -> {
             sourceOfEvent = (CustomButton) event.getSource();
+            sourceOfEvent.setNbClics(sourceOfEvent.getNbClics() + 1);
         };
 
         vert.setOnAction(gestionnaireEvenement);
         rouge.setOnAction(gestionnaireEvenement);
         bleu.setOnAction(gestionnaireEvenement);
 
+        ChangeListener<Number> nbClicsListener = (observable, oldValue, newValue) -> {
+            texteDuHaut.setText(sourceOfEvent.getText() + " choisi " + newValue + " fois");
+            panneau.setStyle("-fx-background-color: " + sourceOfEvent.getCouleur());
+            texteDuBas.setText("Le " + sourceOfEvent.getText() + " est vraiment une jolie couleur !");
+            texteDuBas.styleProperty().bind(Bindings.concat("-fx-text-fill:",sourceOfEvent.getCouleur()));
+        };
+
+        vert.nbClicsProperty().addListener(nbClicsListener);
+        rouge.nbClicsProperty().addListener(nbClicsListener);
+        bleu.nbClicsProperty().addListener(nbClicsListener);
+
+
         boutons.getChildren().addAll(vert, rouge, bleu);
 
         root.setCenter(panneau);
         root.setTop(texteDuHaut);
-        root.setBottom(boutons);
+        root.setBottom(bas);
 
         Scene scene = new Scene(root);
 
